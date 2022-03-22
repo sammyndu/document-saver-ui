@@ -1,0 +1,99 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2">Document Report</h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group me-2">
+      <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary">Export</button> -->
+    </div>
+    <!-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+      <span data-feather="calendar"></span>
+      This week
+    </button> -->
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <!-- <div *ngIf="searchError"class="alert alert-warning alert-dismissible fade show mb-3" role="alert">
+      You should enter at least one of those fields below.
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div> -->
+    <form (ngSubmit)="searchDocument(documentForm)" #documentForm="ngForm">
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control"
+        [ngClass]="{ 'is-invalid': documentForm.submitted && documentId.invalid }" name="id" #documentId="ngModel"  [(ngModel)]="search.documentId" id="documentId">
+        <label for="documentId">Document ID</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control"
+        [ngClass]="{ 'is-invalid': documentForm.submitted && documentName.invalid }"
+         name="name" #documentName="ngModel"  [(ngModel)]="search.documentName" id="documentName">
+        <label for="documentName">Document Name</label>
+      </div>
+      <div class=" input-group mb-3">
+        <!-- <label  for="inputGroupFile01">Upload</label> -->
+        <input type="date" class="form-control"
+        id="documentFile" name="documentFile" [(ngModel)]="search.date" 
+        [ngClass]="{ 'is-invalid': documentForm.submitted && documentFile.invalid }"
+        #documentFile="ngModel">
+      </div>
+
+      <button class="btn btn-primary" type="submit">
+        <div *ngIf="submitting" class="spinner-border text-light spinner-border-sm" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        Search
+      </button>
+    </form>
+  </div>
+</div>
+
+<div class="table-responsive mt-3" id="pdfData">
+  <table class="table table-sm" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+      <thead>
+        <tr>
+          <th scope="col">Document Id</th>
+          <th scope="col">Document Name</th>
+          <th scope="col">Date Created</th>
+          <th scope="col">Date Modified</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="loading"> 
+        <tr style="text-align: center">
+          <td colspan="9">
+            <div style="text-align: center">
+              <div class="spinner-border text-primary spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="docs.length > 0 && !loading">
+       <tr *ngFor="let doc of docs">
+        <td>{{ doc.documentId }}</td>
+        <td>{{ doc.documentName }}</td>
+        <td>{{ doc.dateSubmitted  | date:'yyyy-MM-dd HH:mm:ss'  }}</td>
+        <td>{{ doc.dateModified  | date:'yyyy-MM-dd HH:mm:ss'  }}</td>
+       
+        <td>
+          <button class="btn btn-outline-primary btn-sm me-3" (click)="updateDocument(doc.id)" aria-label="Example icon button with a filter list icon">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn btn-outline-danger btn-sm me-3" (click)="deleteDocument(doc.id)" >
+            <i class="bi bi-trash-fill"></i>
+          </button>
+          <a class="btn btn-outline-success btn-sm me-3" [href]="safeUrl(doc.documentContent)" [download]="doc.documentName+'.pdf'"  aria-label="Example icon button with a filter list icon">
+            <i class="bi bi-cloud-arrow-down-fill"></i>
+          </a>
+        </td>
+       </tr>
+      </tbody>
+      <tbody *ngIf="docs.length < 1 && !loading">
+        <tr>
+         <td colspan="8" class="text-center">No Records Found</td>
+        </tr>
+       </tbody>
+  </table>
+</div>

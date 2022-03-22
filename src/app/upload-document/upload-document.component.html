@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2">Scan Document</h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group me-2">
+      <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary">Export</button> -->
+    </div>
+    <!-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+      <span data-feather="calendar"></span>
+      This week
+    </button> -->
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <form (ngSubmit)="addDocument(documentForm)" #documentForm="ngForm">
+      <div class="form-floating mb-3">
+        <input type="documentId" class="form-control" required
+        [ngClass]="{ 'is-invalid': documentForm.submitted && documentId.invalid }" name="id" #documentId="ngModel"  [(ngModel)]="documentInfo.documentId" id="documentId">
+        <label for="documentId">Document ID</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="documentName" class="form-control" required
+        [ngClass]="{ 'is-invalid': documentForm.submitted && documentName.invalid }"
+         name="name" #documentName="ngModel"  [(ngModel)]="documentInfo.documentName" id="documentName">
+        <label for="documentName">Document Name</label>
+      </div>
+      <div class=" input-group mb-3">
+        <!-- <label  for="inputGroupFile01">Upload</label> -->
+        <input type="file" class="form-control" required
+        id="documentFile" name="documentFile" [(ngModel)]="fileString" 
+        [ngClass]="{ 'is-invalid': documentForm.submitted && documentFile.invalid }"
+        #documentFile="ngModel" (change)="getFile($event)" accept=".pdf">
+      </div>
+      <div class="d-grid gap-2">
+        <button class="btn btn-primary btn-block" disabled>Scan Document</button>
+      </div>
+      
+
+      <button class="btn btn-primary mt-2" [disabled]="documentForm.invalid || submitting" type="submit">
+        <div *ngIf="submitting" class="spinner-border text-light spinner-border-sm" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        Submit form
+      </button>
+    </form>
+  </div>
+</div>
