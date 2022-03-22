@@ -42,7 +42,7 @@ export class UpdateDocumentComponent implements OnInit {
           if(typeof(resp) == 'string') {
             this.toast.error(resp);
           } else {
-            this.toast.success("Document added successfully.", "Added");
+            this.toast.success("Document updated successfully.", "Updated");
             //this.documentInfo = new DocumentInfo;
             //this.fileString = '';
             this.activeModal.close();

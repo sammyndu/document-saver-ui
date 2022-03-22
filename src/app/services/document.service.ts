@@ -40,7 +40,7 @@ export class DocumentService {
     }
 
     updateDocument(id: number, data: DocumentInfo): Observable<any>  {
-        return this.http.put(this.apiBaseUrl, data);
+        return this.http.put(`${this.apiBaseUrl}/${id}`, data);
     }
 
     deleteDocument(id: number): Observable<any>  {

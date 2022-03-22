@@ -8,11 +8,11 @@
   <div class="row">
     <form class="col-md-6 offset-md-3 mb-5" id="ngForm" #documentForm="ngForm" (ngSubmit)="updateDocument(documentForm)">
       
-        <div class="form-floating mb-3">
+        <!-- <div class="form-floating mb-3">
           <input type="documentId" class="form-control" required
           [ngClass]="{ 'is-invalid': documentForm.submitted && documentId.invalid }" name="id" #documentId="ngModel"  [(ngModel)]="documentInfo.documentId" id="documentId">
           <label for="documentId">Document ID</label>
-        </div>
+        </div> -->
         <div class="form-floating mb-3">
           <input type="documentName" class="form-control" required
           [ngClass]="{ 'is-invalid': documentForm.submitted && documentName.invalid }"

@@ -42,6 +42,7 @@ export class UploadDocumentComponent implements OnInit {
             this.toast.error(resp);
           } else {
             this.toast.success("Document added successfully.", "Added");
+            form.resetForm();
             this.documentInfo = new DocumentInfo;
             this.fileString = '';
           }
